@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  
           submodules: 'recursive'
 
       - name: Set up JDK
@@ -42,7 +42,7 @@ jobs:
           version=`awk -F "=" '$1 == "version" {print $2}' gradle.properties`
           commit_count=`git rev-list HEAD --count`
           version="${version}.r${commit_count}"
-          echo "VERSION=$version" >> $GITHUB_ENV
+          echo "VERSION=$version" >> $GITHUB_ENV  
 
       # try setup ssh
       - name: Set up SSH
@@ -54,9 +54,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          rm ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
-          git clone git@github.com:sti-233/Close-BiliRoamingX.git
-          mv ./Close-BiliRoamingX/Accounts.kt ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
+          rm ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt  
+          git clone git@github.com:starsdream666/BiliRoamingXBuilding.git
+          mv ./Close-BiliRoamingX/Accounts.kt ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt  
           ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g -Pversion=$VERSION dist
 
       - name: Upload artifacts
