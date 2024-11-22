@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-分支:
+    分支:
       - main
     paths-ignore:
       - '**.md'
