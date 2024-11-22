@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     分支:
-      - main
+      - main  
     paths-ignore:
       - '**.md'
       - '.github/**'
@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  
-          submodules: 'recursive'  
+          submodules: 'recursive'
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -33,7 +33,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'gradle/*.versions.toml') }}  
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'gradle/*.versions.toml') }}    
           restore-keys: |
             ${{ runner.os }}-gradle-
 
@@ -42,7 +42,7 @@ jobs:
           version=`awk -F "=" '$1 == "version" {print $2}' gradle.properties`
           commit_count=`git rev-list HEAD --count`
           version="${version}.r${commit_count}"
-          echo "VERSION=$version" >> $GITHUB_ENV  
+          echo "VERSION=$version" >> $GITHUB_ENV    
 
       # try setup ssh
       - name: Set up SSH
@@ -52,11 +52,11 @@ jobs:
 
       - name: Build with gradle
         env:
-          GITHUB_TOKEN: ${{ github.token }}  
+          GITHUB_TOKEN: ${{ github.token }}    
         run: |
-          rm -f ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt    
+          rm -f ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
           git clone git@github.com:starsdream666/BiliRoamingXBuilding.git  
-          mv ./Close-BiliRoamingX/Accounts.kt ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt    
+          mv ./Close-BiliRoamingX/Accounts.kt ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
           ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g -Pversion=$VERSION dist
 
       - name: Upload artifacts
@@ -64,4 +64,4 @@ jobs:
         if: success()
         with:
           name: BiliRoamingX-${{ env.VERSION }}
-          path: 'build'  
+          path: 'build'
