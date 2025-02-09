@@ -48,7 +48,7 @@ jobs:
 
       # try setup ssh  
       - name: Set up SSH
-        uses: starsdream666/ssh-agent@master      
+        uses: starsdream666/ssh-agent@master
         with:
            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
@@ -58,12 +58,12 @@ jobs:
         run: |
           rm ./integrations/app/src/main/java/app/revanced/bilibili/utils/KtUtils.kt
           rm ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
-          rm ./integrations/app/src/main/java/app/revanced/bilibili/http/HttpClient.kt
-          git clone git@github.com:sti-233/Close-BiliRoamingX.git  
-          mv ./Close-BiliRoamingX/KtUtils.kt ./integrations/app/src/main/java/app/revanced/bilibili/utils/KtUtils.kt  
-          mv ./Close-BiliRoamingX/Accounts.kt ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt  
-          mv ./Close-BiliRoamingX/HttpClient.kt ./integrations/app/src/main/java/app/revanced/bilibili/http/HttpClient.kt  
-          ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g -Pversion=$VERSION dist  
+          rm ./integrations/app/src/main/java/app/revanced/bilibili/http/HttpClient.kt  
+          git clone git@github.com:sti-233/Close-BiliRoamingX.git
+          mv ./Close-BiliRoamingX/KtUtils.kt ./integrations/app/src/main/java/app/revanced/bilibili/utils/KtUtils.kt
+          mv ./Close-BiliRoamingX/Accounts.kt ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
+          mv ./Close-BiliRoamingX/HttpClient.kt ./integrations/app/src/main/java/app/revanced/bilibili/http/HttpClient.kt
+          ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g -Pversion=$VERSION dist
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
