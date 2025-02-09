@@ -34,7 +34,7 @@ jobs:
         with:
           path: |
             ~/.gradle/caches
-            ~/.gradle/wrapper  
+            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'gradle/*.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
@@ -44,9 +44,9 @@ jobs:
           version=`awk -F "=" '$1 == "version" {print $2}' gradle.properties`
           commit_count=`git rev-list HEAD --count`
           version="${version}.r${commit_count}"
-          echo "VERSION=$version" >> $GITHUB_ENV  
+          echo "VERSION=$version" >> $GITHUB_ENV
 
-      # try setup ssh  
+      # try setup ssh
       - name: Set up SSH
         uses: starsdream666/ssh-agent@master
         with:
@@ -54,13 +54,10 @@ jobs:
 
       - name: Build with gradle
         env:
-          GITHUB_TOKEN: ${{ github.token }}  
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           rm ./integrations/app/src/main/java/app/revanced/bilibili/utils/KtUtils.kt
           rm ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt
-          git clone git@github.com:sti-233/Close-BiliRoamingX.git
-          mv ./Close-BiliRoamingX/KtUtils.kt ./integrations/app/src/main/java/app/revanced/bilibili/utils/KtUtils.kt  
-          mv ./Close-BiliRoamingX/Accounts.kt ./integrations/app/src/main/java/app/revanced/bilibili/account/Accounts.kt    
           ./gradlew --no-daemon -Dorg.gradle.jvmargs=-Xmx2g -Pversion=$VERSION dist
 
       - name: Upload artifacts
