@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <android/log.h>
 #include <pthread.h>
-#include <string.h>
 #include "dobby.h"
 
 #define LOG_TAG "BiliRoamingX"
@@ -15,18 +14,6 @@
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
-
-// public static native a(I)Ljava/lang/String;
-JNIEXPORT jstring JNICALL Java_kofua_rr_a(JNIEnv *env, jclass clazz, jint value) {
-    char buffer[20]; 
-    snprintf(buffer, sizeof(buffer), "%d", value);
-    return (*env)->NewStringUTF(env, buffer);
-}
-
-// public static native b(Ljava/lang/String;)Ljava/lang/String;
-JNIEXPORT jstring JNICALL Java_kofua_rr_b(JNIEnv *env, jclass clazz, jstring input) {
-    return (*env)->NewLocalRef(env, input);
-}
 
 void fake_exit(int status) {
     LOGI("Exit function fake success, status: %d", status);
